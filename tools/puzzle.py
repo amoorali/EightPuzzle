@@ -48,6 +48,16 @@ class Puzzle:
             matrix[i] = self.matrix[i][:]
         return matrix
 
+    def find(self, value):
+        """Return the row, col of the specified value in the matrix"""
+        if value < 0 or value > 8:
+            return Exception('Value must be between 0 and 8')
+
+        for i in range(3):
+            for j in range(3):
+                if self.matrix[i][j] == value:
+                    return (i, j)
+
     def goal_state(self) -> list[list]:
         return [[1, 2, 3],
                 [4, 5, 6],

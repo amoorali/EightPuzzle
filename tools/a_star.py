@@ -28,8 +28,13 @@ class AStarSolution:
         
         return points
 
+    # NOT FIXED
     def _valid_moves(self):
-        puzzle.find
+        row, col = self.puzzle_object.find(0)
+        dirs = [(row + 1, col), (row, col + 1), (row - 1, col), (row, col - 1)]
+        # [dir for dir in dirs if 0 <= dir[0] <= 3 and 0 <= dir[1] <= 3)
+
+        
 
     def _generate_moves(self):
         pass

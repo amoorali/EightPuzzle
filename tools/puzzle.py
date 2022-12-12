@@ -21,6 +21,9 @@ class Puzzle:
         
         return txt.strip()
 
+    def toString(self, input) -> str:
+        return self.__str__(input)
+
     def getNums(self) -> list[list]:
         return self._nums
 

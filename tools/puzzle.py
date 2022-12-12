@@ -2,8 +2,7 @@ from random import sample
 
 class Puzzle:
     def __init__(self):
-        temp = sample(range(9), 9)
-        self._nums = [[temp.pop() for _ in range(3)] for _ in range(3)]
+        pass
 
     def __eq__(self, other):
         if self.__class__ != other.__class__:
@@ -50,3 +49,7 @@ class Puzzle:
         return [[1, 2, 3],
                 [4, 5, 6],
                 [7, 8, 0]]
+        
+    def create_random(self):
+        temp = sample(range(9), 9)
+        return [[temp.pop() for _ in range(3)] for _ in range(3)]

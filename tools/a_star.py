@@ -28,20 +28,6 @@ class AStarSolution:
                 points += abs(row - goal_row) + abs(col - goal_col)
         
         return points
-    
-    def peek(self, row, col):
-        """Return the value at the specified row, col"""
-        return self.matrix[row][col]
-
-    def poke(self, row, col, value):
-        """Replace the value at the specified row, col"""
-        self.matrix[row][col] = value
-
-    def swap(self, pos1, pos2):
-        """Swap the values at the specified positions"""
-        temp = self.peek(*pos1)
-        self.poke(*pos1, value=self.peek(*pos2))
-        self.poke(*pos2, value=temp)
 
     def _valid_moves(self):
         pass

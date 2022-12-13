@@ -1,20 +1,24 @@
-import puzzle
+from puzzle import Puzzle
 
 class AStarSolution:
     def __init__(self, matrix):
         # puzzle object
-        self.puzzle_object = puzzle.Puzzle
-        # heuristic value
-        self._h_value = 0
-        # state
-        self.matrix = matrix
-        # depth of the node
-        self._depth = 0
-        # parent
-        self._parent = None
+        self.puzzle_object = Puzzle(matrix)
 
-    def solve(self):
-        print(self._calc_manhattan(self.matrix))
+    def solve_misplaced_tiles(self):
+        pass
+
+    def solve_manhattan(self):
+        """Solve the puzzle with A* algorithm"""
+        def is_solved(self):
+            return self.matrix == Puzzle.goal_state()
+
+        open = [self.puzzle_object]
+        close = []
+        
+        while open:
+            puz = open.pop()
+            self._generate_moves()
 
     def _calc_manhattan(self):
         points = 0
@@ -27,18 +31,4 @@ class AStarSolution:
                 points += abs(row - goal_row) + abs(col - goal_col)
         
         return points
-
-    def _valid_moves(self):
-        row, col = self.puzzle_object.find(0)
-        dirs = [(row + 1, col), (row, col + 1), (row - 1, col), (row, col - 1)]
-        valid_dirs = []
-
-        for dir in dirs:
-            row, col = dirs
-            if 0 <= row < 3 and 0 <= col < 3:
-                valid_dirs.append(dir)
         
-        return valid_dirs
-
-    def _generate_moves(self):
-        pass

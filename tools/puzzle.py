@@ -1,8 +1,15 @@
 from random import sample
 
 class Puzzle:
-    def __init__(self):
-        pass
+    def __init__(self, state=None, parent=None, hval=0, depth=0):
+        # heuristic value
+        self._h_value = hval
+        # state
+        self.matrix = state
+        # depth of the node
+        self._depth = depth
+        # parent
+        self._parent = parent
 
     def __eq__(self, other):
         if self.__class__ != other.__class__:
@@ -48,6 +55,11 @@ class Puzzle:
             matrix[i] = self.matrix[i][:]
         return matrix
 
+    def swap_and_clone(self, coordinates):
+        """Clone a new puzzle obj and swap specified values in the clone"""
+        temp = self._clone()
+        temp._swap(self.find(0), coordinates)
+
     def find(self, value):
         """Return the row, col of the specified value in the matrix"""
         if value < 0 or value > 8:
@@ -57,6 +69,26 @@ class Puzzle:
             for j in range(3):
                 if self.matrix[i][j] == value:
                     return (i, j)
+
+    
+    def _valid_moves(self):
+        row, col = self.find(0)
+        dirs = [(row + 1, col), (row, col + 1), (row - 1, col), (row, col - 1)]
+        valid_dirs = []
+
+        for dir in dirs:
+            row, col = dirs
+            if 0 <= row < 3 and 0 <= col < 3:
+                valid_dirs.append(dir)
+        
+        return valid_dirs
+
+    def _generate_moves(self):
+        movelist = []
+
+        for dir in self._valid_moves():
+            temp = self.clone_and_swap(dir)
+            pass
 
     def goal_state(self) -> list[list]:
         return [[1, 2, 3],

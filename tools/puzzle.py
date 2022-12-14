@@ -19,7 +19,8 @@ class Puzzle:
     
     def __str__(self, input: list[list]=None) -> str:
         if not input:
-            input = self._nums
+            input = self.matrix
+            print(input)
         txt = ''
         for i in range(3):
             for j in range(3):
@@ -31,9 +32,6 @@ class Puzzle:
     def toString(self, input) -> str:
         return self.__str__(input)
 
-    def getNums(self) -> list[list]:
-        return self._nums
-
     def _peek(self, row, col):
         """Return the value at the specified row, col"""
         return self.matrix[row][col]
@@ -44,21 +42,19 @@ class Puzzle:
 
     def _swap(self, pos1, pos2):
         """Swap the values at the specified positions"""
-        temp = self.peek(*pos1)
-        self.poke(*pos1, value=self.peek(*pos2))
-        self.poke(*pos2, value=temp)
+        temp = self._peek(*pos1)
+        self._poke(*pos1, value=self._peek(*pos2))
+        self._poke(*pos2, value=temp)
 
     def _clone(self):
         """Return a clone object with same matrix values"""
-        matrix = Puzzle()
-        for i in range(3):
-            matrix[i] = self.matrix[i][:]
-        return matrix
+        return Puzzle(self.matrix)
 
     def swap_and_clone(self, coordinates):
         """Clone a new puzzle obj and swap specified values in the clone"""
         temp = self._clone()
         temp._swap(self.find(0), coordinates)
+        return temp
 
     def find(self, value):
         """Return the row, col of the specified value in the matrix"""
@@ -72,28 +68,37 @@ class Puzzle:
 
     
     def _valid_moves(self):
+        print(self.matrix)
+        print()
         row, col = self.find(0)
+        print(f'row: {row}, col: {col}')
         dirs = [(row + 1, col), (row, col + 1), (row - 1, col), (row, col - 1)]
         valid_dirs = []
 
         for dir in dirs:
-            row, col = dirs
-            if 0 <= row < 3 and 0 <= col < 3:
+            i, j = dir
+            if 0 <= i < 3 and 0 <= j < 3:
+                print(dir)
                 valid_dirs.append(dir)
         
         return valid_dirs
 
     def _generate_moves(self):
         movelist = []
-
-        for dir in self._valid_moves():
-            temp = self.clone_and_swap(dir)
-            pass
+        dirs = self._valid_moves()
+        for dir in dirs:
+            temp = self.swap_and_clone(dir)
+            temp._parent = self
+            temp._depth = self._depth + 1
+            movelist.append(temp)
+        
+        return movelist
+            
 
     def goal_state(self) -> list[list]:
-        return [[1, 2, 3],
-                [4, 5, 6],
-                [7, 8, 0]]
+        return [[0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8]]
         
     def create_random(self):
         temp = sample(range(9), 9)

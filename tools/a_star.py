@@ -1,4 +1,4 @@
-from puzzle import Puzzle
+from tools.puzzle import Puzzle
 
 class AStarSolution:
     def __init__(self, matrix):
@@ -15,10 +15,21 @@ class AStarSolution:
 
         open = [self.puzzle_object]
         close = []
-        
+        c = 10
         while open:
             puz = open.pop()
-            self._generate_moves()
+            print(puz.matrix)
+            movelist = puz._generate_moves()
+            print(movelist[0])
+            print()
+            # p = movelist.pop()
+            # open.append(p)
+            # print(p)
+            # print()
+            # c -= 1
+            # if c == 0:
+            #     return
+
 
     def _calc_manhattan(self):
         points = 0

@@ -59,8 +59,6 @@ class Puzzle:
         """Clone a new puzzle obj and swap specified values in the clone"""
         temp = self._clone()
         temp._swap(self.find(0), coordinates)
-        # print(f"self: {self.matrix}")
-        # print(f"temp: {temp.matrix}")
         return temp
 
     def find(self, value):
@@ -75,17 +73,13 @@ class Puzzle:
 
     
     def _valid_moves(self):
-        print(self.matrix)
-        print()
         row, col = self.find(0)
-        print(f'row: {row}, col: {col}')
         dirs = [(row + 1, col), (row, col + 1), (row - 1, col), (row, col - 1)]
         valid_dirs = []
 
         for dir in dirs:
             i, j = dir
             if 0 <= i < 3 and 0 <= j < 3:
-                print(dir)
                 valid_dirs.append(dir)
         
         return valid_dirs

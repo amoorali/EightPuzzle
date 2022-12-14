@@ -18,9 +18,8 @@ class AStarSolution:
         c = 10
         while open:
             puz = open.pop()
-            print(puz.matrix)
             movelist = puz._generate_moves()
-            print(movelist[0])
+            print(f"movelist[0]: {movelist[0]}")
             print()
             # p = movelist.pop()
             # open.append(p)

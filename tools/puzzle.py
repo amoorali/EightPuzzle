@@ -42,18 +42,25 @@ class Puzzle:
 
     def _swap(self, pos1, pos2):
         """Swap the values at the specified positions"""
+        # print(f"before swap:\n{self}")
         temp = self._peek(*pos1)
         self._poke(*pos1, value=self._peek(*pos2))
         self._poke(*pos2, value=temp)
+        # print(f"after swap:\n{self}")
 
     def _clone(self):
         """Return a clone object with same matrix values"""
-        return Puzzle(self.matrix)
+        temp = Puzzle([[], [], []])
+        for i in range(3):
+            temp.matrix[i] = self.matrix[i][:]
+        return temp
 
     def swap_and_clone(self, coordinates):
         """Clone a new puzzle obj and swap specified values in the clone"""
         temp = self._clone()
         temp._swap(self.find(0), coordinates)
+        # print(f"self: {self.matrix}")
+        # print(f"temp: {temp.matrix}")
         return temp
 
     def find(self, value):
@@ -91,6 +98,8 @@ class Puzzle:
             temp._parent = self
             temp._depth = self._depth + 1
             movelist.append(temp)
+            # print(f"self: {self.matrix}")
+            # print(f"temp: {temp.matrix}")
         
         return movelist
             

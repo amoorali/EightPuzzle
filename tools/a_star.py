@@ -30,7 +30,6 @@ class AStarSolution:
 
         while openl:
             puz = openl.pop(0)
-            move_count += 1
             if is_solved(puz):
                 return self._generate_path(puz), move_count
 
@@ -38,6 +37,7 @@ class AStarSolution:
             openl_idx = closel_idx = -1
 
             for move in successors:
+                move_count += 1
                 openl_idx = index(move, openl)
                 closel_idx = index(move, closel_idx)
                 hval = heuristic(move)

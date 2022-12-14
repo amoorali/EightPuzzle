@@ -13,10 +13,14 @@ class AStarSolution:
         self.path = []
 
     def solve_misplaced_tiles(self):
-        return self._calc_misplaced_tiles(self.puzzle_object)
+        """Solve the puzzle with A*: h(x) -> misplaced tiles """
+        return self._solve(heuristic=self._calc_misplaced_tiles)
 
     def solve_manhattan(self):
-        """Solve the puzzle with A* algorithm"""
+        """Solve the puzzle with A*: h(x) -> manhattan distance"""
+        return self._solve(heuristic=self._calc_manhattan)
+        
+    def _solve(self, heuristic):
         def is_solved(puzzle):
             return puzzle.matrix == puzzle.goal_state()
 
@@ -36,7 +40,7 @@ class AStarSolution:
             for move in successors:
                 openl_idx = index(move, openl)
                 closel_idx = index(move, closel_idx)
-                hval = self._calc_manhattan(move)
+                hval = heuristic(move)
                 fval = hval + move._depth
 
                 # if it's not visited, add to the open list

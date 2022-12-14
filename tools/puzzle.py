@@ -95,11 +95,11 @@ class Puzzle:
         return movelist
             
 
-    def goal_state(self) -> list[list]:
-        return [[0, 1, 2],
-                [3, 4, 5],
-                [6, 7, 8]]
+def goal_state() -> list[list]:
+    return [[0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8]]
         
-    def create_random(self):
-        temp = sample(range(9), 9)
-        return [[temp.pop() for _ in range(3)] for _ in range(3)]
+def create_random():
+    temp = sample(range(9), 9)
+    return [[temp.pop() for _ in range(3)] for _ in range(3)]

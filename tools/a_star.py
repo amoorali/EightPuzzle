@@ -1,15 +1,11 @@
-from tools.puzzle import Puzzle
+from tools.puzzle import *
+from tools.funcs import index
 
-def index(item, list):
-    try:
-        return list.index(item)
-    except:
-        return -1
 
 class AStarSolution:
     def __init__(self, matrix):
         # puzzle object
-        self.puzzle_object = Puzzle(matrix)
+        self.initial_state = Puzzle(matrix)
         self.path = []
 
     def solve_misplaced_tiles(self):
@@ -22,14 +18,14 @@ class AStarSolution:
         
     def _solve(self, heuristic):
         def is_solved(puzzle):
-            return puzzle.matrix == puzzle.goal_state()
+            return puzzle.matrix == goal_state()
 
-        openl = [self.puzzle_object]
+        openl = [self.initial_state]
         closel = []
         move_count = 0
 
         while openl:
-            puz = openl.pop(0)
+            puz = openl.pop()
             if is_solved(puz):
                 return self._generate_path(puz), move_count
 
@@ -65,7 +61,7 @@ class AStarSolution:
                         openl.append(move)
             
             closel.append(puz)
-            openl = sorted(openl, key=lambda p: p._h_value + p._depth)
+            openl = sorted(openl, key=lambda p: p._h_value + p._depth, reverse=True)
         
         return [], 0
 
@@ -83,7 +79,7 @@ class AStarSolution:
         points = 0
         for row in range(3):
             for col in range(3):
-                goal_val, curr_val = puzzle.goal_state()[row][col], puzzle.matrix[row][col]
+                goal_val, curr_val = goal_state()[row][col], puzzle.matrix[row][col]
                 if goal_val != curr_val:
                     points += 1
         return points

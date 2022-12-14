@@ -52,6 +52,7 @@ class AStarSolution:
                         copy._h_value = hval
                         copy._depth = move._depth
                 
+                # if it's in close list, check if it has smaller fval, if so add it to open list
                 elif closel_idx != -1:
                     copy = closel[closel_idx]
                     if fval < copy._h_value + copy._depth:

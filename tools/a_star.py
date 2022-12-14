@@ -13,7 +13,7 @@ class AStarSolution:
         self.path = []
 
     def solve_misplaced_tiles(self):
-        pass
+        return self._calc_misplaced_tiles(self.puzzle_object)
 
     def solve_manhattan(self):
         """Solve the puzzle with A* algorithm"""
@@ -61,14 +61,8 @@ class AStarSolution:
             
             closel.append(puz)
             openl = sorted(openl, key=lambda p: p._h_value + p._depth)
-
-            # if move_count == 20:
-            #     return self._generate_path(puz), move_count
         
         return [], 0
-
-            
-
 
     def _calc_manhattan(self, puzzle):
         points = 0
@@ -78,6 +72,15 @@ class AStarSolution:
                 goal_row, goal_col = int(val / 3), (val % 3)
                 points += abs(row - goal_row) + abs(col - goal_col)
         
+        return points
+
+    def _calc_misplaced_tiles(self, puzzle):
+        points = 0
+        for row in range(3):
+            for col in range(3):
+                goal_val, curr_val = puzzle.goal_state()[row][col], puzzle.matrix[row][col]
+                if goal_val != curr_val:
+                    points += 1
         return points
 
     def _generate_path(self, node):

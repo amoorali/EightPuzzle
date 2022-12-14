@@ -20,14 +20,14 @@ class Puzzle:
     def __str__(self, input: list[list]=None) -> str:
         if not input:
             input = self.matrix
-            print(input)
         txt = ''
         for i in range(3):
             for j in range(3):
                 txt += f'{input[i][j]} '
             txt += '\n'
         
-        return txt.strip()
+        txt = txt.replace('0', ' ')
+        return txt
 
     def toString(self, input) -> str:
         return self.__str__(input)
@@ -59,6 +59,8 @@ class Puzzle:
         """Clone a new puzzle obj and swap specified values in the clone"""
         temp = self._clone()
         temp._swap(self.find(0), coordinates)
+        temp._parent = self
+        temp._depth = self._depth + 1
         return temp
 
     def find(self, value):
@@ -88,12 +90,7 @@ class Puzzle:
         movelist = []
         dirs = self._valid_moves()
         for dir in dirs:
-            temp = self.swap_and_clone(dir)
-            temp._parent = self
-            temp._depth = self._depth + 1
-            movelist.append(temp)
-            # print(f"self: {self.matrix}")
-            # print(f"temp: {temp.matrix}")
+            movelist.append(self.swap_and_clone(dir))
         
         return movelist
             

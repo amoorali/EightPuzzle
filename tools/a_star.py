@@ -25,7 +25,7 @@ class AStarSolution:
         move_count = 0
 
         while openl:
-            puz = openl.pop()
+            puz = openl.pop(0)
             if is_solved(puz):
                 return self._generate_path(puz), move_count
 
@@ -61,7 +61,7 @@ class AStarSolution:
                         openl.append(move)
             
             closel.append(puz)
-            openl = sorted(openl, key=lambda p: p._h_value + p._depth, reverse=True)
+            openl = sorted(openl, key=lambda p: p._h_value + p._depth)
         
         return [], 0
 
